@@ -5,18 +5,20 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 public class StringParser {
 	private static final String DEFAULT_DELIMITER = ":|,";
+	private static final Pattern pattern = Pattern.compile("//(.)\n(.*)");
 	public static List<Integer> parse(String input) {
 		String delimiter = DEFAULT_DELIMITER;
-		Matcher matcher = Pattern.compile("//(.)\n(.*)").matcher(input);
+		Matcher matcher = pattern.matcher(input);
 		if (matcher.find()) {
 			delimiter += "|" + matcher.group(1);
 			input = matcher.group(2);
 		}
 
-		List<String> numbers = Arrays.stream(input.split(delimiter)).map(String::trim).toList();
+		List<String> numbers = Arrays.stream(input.split(delimiter)).map(String::trim).collect(Collectors.toList());
 		return tokenize(numbers);
 	}
 
