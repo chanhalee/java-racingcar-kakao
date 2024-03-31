@@ -5,8 +5,9 @@ import racingcar.dto.CarState;
 
 public class Car implements Comparable<Car>{
 
-	private final String name;
 	private int position;
+
+	private final String name;
 
 	public Car(String name) {
 		this(name, 0);
@@ -14,6 +15,12 @@ public class Car implements Comparable<Car>{
 
 	public Car(String name, int position) {
 		this.name = name;
+		if (name.length() >= 6) {
+			throw new RuntimeException("자동차 이름의 길이가 너무 긺니다.");
+		}
+		if (name.isEmpty()) {
+			throw new RuntimeException("자동차 이름은 공백이거나 빈 문자열 일 수 없습니다.");
+		}
 		this.position = position;
 	}
 
