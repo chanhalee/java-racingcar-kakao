@@ -6,20 +6,26 @@ import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import racingcar.dto.CarState;
 
 public class RacingGame {
 
-	private final List<Car> cars;
 	private int rounds;
+
+	private final List<Car> cars;
 	private final RacingGameUI ui;
 	private final ProceedLogic logic;
 
 	public RacingGame(RacingGameUI ui, NumberGenerator numberGenerator) {
+		this(new ArrayList<>(), ui, new ProceedLogic(numberGenerator));
+	}
+
+	public RacingGame(List<Car> cars, RacingGameUI ui, ProceedLogic logic) {
+		this.cars = cars;
 		this.ui = ui;
-		this.cars = new ArrayList<>();
-		this.logic = new ProceedLogic(numberGenerator);
+		this.logic = logic;
 	}
 
 	public void play() {
@@ -28,18 +34,11 @@ public class RacingGame {
 		ui.printResultHeader();
 		for (int i = 0; i < rounds; i++) {
 			playRound();
-			ui.printCarStates(cars.stream().map(Car::getState).toList());
+			ui.printCarStates(cars.stream().map(Car::getState).collect(Collectors.toList()));
 		}
 
 		ui.printWinners(this.findWinner());
 	}
-
-	private void playRound() {
-		cars.stream()
-			.filter(car -> logic.askProceed())
-			.forEach(Car::proceed);
-	}
-
 	private void initialize() {
 		initCars();
 		initRounds();
@@ -57,14 +56,14 @@ public class RacingGame {
 
 	private void initCars() {
 		boolean validationPass = false;
-		List<String> carNameList = null;
+		List<String> carNames = null;
 		while (!validationPass) {
-			String carNames = ui.getCarNames();
-			carNameList = Arrays.stream(carNames.split(",")).map(String::trim).toList();
-			validationPass = validateCarNames(carNameList);
+			String carNameString = ui.getCarNameString();
+			carNames = Arrays.stream(carNameString.split(",")).map(String::trim).collect(Collectors.toList());
+			validationPass = validateCarNames(carNames);
 		}
 
-		for (String name : carNameList) {
+		for (String name : carNames) {
 			cars.add(new Car(name));
 		}
 	}
@@ -96,9 +95,7 @@ public class RacingGame {
 	}
 
 	private boolean isNumericalRound(String round) {
-		if (!Arrays.stream(round.split(""))
-			.filter(s -> !Character.isDigit(s.charAt(0)))
-			.toList().isEmpty()){
+		if (Arrays.stream(round.split("")).anyMatch(s -> !Character.isDigit(s.charAt(0)))){
 			ui.printError(ErrorType.NON_NUMERICAL_ROUND);
 			return false;
 		}
@@ -106,7 +103,7 @@ public class RacingGame {
 	}
 
 	private boolean notEmptyCarName(List<String> carNameList) {
-		if (carNameList.isEmpty() || !carNameList.stream().filter(String::isEmpty).toList().isEmpty()) {
+		if (carNameList.isEmpty() || carNameList.stream().anyMatch(String::isEmpty)) {
 			ui.printError(ErrorType.EMPTY_CAR_NAME);
 			return false;
 		}
@@ -114,7 +111,7 @@ public class RacingGame {
 	}
 
 	private boolean notTooLongCarName(List<String> carNameList) {
-		if (!carNameList.stream().filter(name -> name.length() > 5).toList().isEmpty()) {
+		if (carNameList.stream().anyMatch(name -> name.length() > 5)) {
 			ui.printError(ErrorType.TOO_LONG_CAR_NAME);
 			return false;
 		}
@@ -130,12 +127,19 @@ public class RacingGame {
 		return true;
 	}
 
-	private List<CarState> findWinner() {
+	private void playRound() {
+		cars.stream()
+			.filter(car -> logic.askProceed())
+			.forEach(Car::proceed);
+	}
+
+
+	public List<CarState> findWinner() {
 		Collections.sort(cars);
 		Car winner = cars.get(0);
 		return cars.stream()
 			.filter(car -> winner.compareTo(car) == 0)
 			.map(Car::getState)
-			.toList();
+			.collect(Collectors.toList());
 	}
 }
