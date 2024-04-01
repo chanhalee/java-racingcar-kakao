@@ -1,7 +1,5 @@
 package racingcar;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,8 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
-class RacingGameTest {
-    RacingGame racingGame;
+import racingcar.domain.Car;
+
+class RacingGameControllerTest {
+    RacingGameController racingGameController;
     List<Car> cars;
     @BeforeEach
     void setUp() {
@@ -26,8 +26,8 @@ class RacingGameTest {
     public void findWinnerTest(){
         Car winner = new Car("win", 3);
         cars.add(winner);
-        racingGame = new RacingGame(cars, null, null);
-        Assertions.assertThat(racingGame.findWinner()).contains(winner.getState());
+        racingGameController = new RacingGameController(cars, null, null);
+        Assertions.assertThat(racingGameController.findWinner()).contains(winner.getState());
     }
 
     @Test
@@ -37,8 +37,8 @@ class RacingGameTest {
         cars.add(winner1);
         Car winner2 = new Car("win2", 3);
         cars.add(winner2);
-        racingGame = new RacingGame(cars, null, null);
-        Assertions.assertThat(racingGame.findWinner()).contains(winner1.getState(), winner2.getState());
+        racingGameController = new RacingGameController(cars, null, null);
+        Assertions.assertThat(racingGameController.findWinner()).contains(winner1.getState(), winner2.getState());
     }
 
 }

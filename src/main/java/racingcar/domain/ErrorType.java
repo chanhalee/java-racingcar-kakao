@@ -1,4 +1,4 @@
-package racingcar;
+package racingcar.domain;
 
 public enum ErrorType {
 	EMPTY_CAR_NAME("자동차 이름은 공백일 수 없습니다."),
