@@ -4,6 +4,9 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
+import racingcar.domain.NumberGenerator;
+import racingcar.domain.RandomNumberGenerator;
+
 public class RandomNumberGeneratorTest {
 
 	@Test
