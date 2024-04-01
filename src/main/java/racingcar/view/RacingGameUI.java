@@ -1,5 +1,6 @@
-package racingcar;
+package racingcar.view;
 
+import racingcar.domain.ErrorType;
 import racingcar.dto.CarState;
 
 import java.util.List;
