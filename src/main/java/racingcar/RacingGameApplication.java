@@ -5,12 +5,12 @@ import racingcar.view.RacingGameUI;
 
 public class RacingGameApplication {
 
-	public static void main(String[] args) {
-		RacingGameController game = new RacingGameController(
-			new RacingGameUI(),
-			new RandomNumberGenerator()
-		);
+    public static void main(String[] args) {
+        RacingGameController game = new RacingGameController(
+            new RacingGameUI(),
+            new RandomNumberGenerator()
+        );
 
-		game.play();
-	}
+        game.play();
+    }
 }

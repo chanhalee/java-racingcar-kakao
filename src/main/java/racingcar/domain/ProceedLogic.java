@@ -1,12 +1,12 @@
 package racingcar.domain;
 
 public class ProceedLogic {
-	private final NumberGenerator numberGenerator;
-	public ProceedLogic(NumberGenerator numberGenerator) {
-		this.numberGenerator = numberGenerator;
-	}
+    private final NumberGenerator numberGenerator;
+    public ProceedLogic(NumberGenerator numberGenerator) {
+        this.numberGenerator = numberGenerator;
+    }
 
-	public boolean askProceed() {
+    public boolean askProceed() {
 		return numberGenerator.generate() > 3;
 	}
 }
