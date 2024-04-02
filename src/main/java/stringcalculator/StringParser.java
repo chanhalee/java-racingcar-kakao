@@ -12,6 +12,9 @@ public class StringParser {
 	private static final Pattern pattern = Pattern.compile("//(.)\n(.*)");
 	public static List<Integer> parse(String input) {
 		String delimiter = DEFAULT_DELIMITER;
+		if (input == null) {
+			input = "";
+		}
 		Matcher matcher = pattern.matcher(input);
 		if (matcher.find()) {
 			delimiter += "|" + matcher.group(1);
