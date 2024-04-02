@@ -8,32 +8,32 @@ import java.util.Scanner;
 
 public class RacingGameUI {
 
-	private final Scanner scanner;
+    private final Scanner scanner;
 
-	public RacingGameUI() {
+    public RacingGameUI() {
 		this.scanner = new Scanner(System.in);
 	}
 
-	public String getCarNameString() {
-		System.out.println("경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).");
-		return scanner.nextLine();
-	}
+    public String getCarNameString() {
+        System.out.println("경주할 자동차 이름을 입력하세요(이름은 쉼표(,)를 기준으로 구분).");
+        return scanner.nextLine();
+    }
 
-	public String getRounds() {
-		System.out.println("시도할 회수는 몇회인가요?");
-		return scanner.nextLine();
-	}
+    public String getRounds() {
+        System.out.println("시도할 회수는 몇회인가요?");
+        return scanner.nextLine();
+    }
 
-	public void printResultHeader() {
-		System.out.println("실행 결과");
-	}
+    public void printResultHeader() {
+        System.out.println("실행 결과");
+    }
 
-	public void printCarStates(List<CarState> carStates) {
-		carStates.forEach(carState -> {
-			System.out.printf("%s : %s\n", carState.getName(), "-".repeat(Math.max(0, carState.getPosition())));
-		});
-		System.out.println();
-	}
+    public void printCarStates(List<CarState> carStates) {
+        carStates.forEach(carState -> {
+            System.out.printf("%s : %s\n", carState.getName(), "-".repeat(Math.max(0, carState.getPosition())));
+        });
+        System.out.println();
+    }
 
 	public void printWinners(List<CarState> winners) {
 		System.out.print(winners.get(0).getName());
